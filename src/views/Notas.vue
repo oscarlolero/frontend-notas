@@ -65,6 +65,20 @@
                   alert(err);
               });
             },
+            eliminarNota(id) {
+                this.axios.delete(`nota/${id}`).then(res => {
+                    const index = this.notas.findIndex(item => item._id === res.data.id);
+                    this.notas.splice(index, 1);
+                    this.mensaje.text = 'Nota eliminada con éxito';
+                    this.mensaje.color = 'success';
+                    this.showAlert();
+                }).catch(e => {
+                    this.mensaje.text = 'Hubo un error al eliminar la nota';
+                    this.mensaje.color = 'danger';
+                    this.showAlert();
+                    console.log(e);
+                });
+            },
             listarNotas() {
                 this.axios.post('notas').then((response) => {
                     this.notas = response.data;
